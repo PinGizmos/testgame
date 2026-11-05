@@ -1,0 +1,327 @@
+#config_version=6
+
+hardware:
+    platform: p3_roc
+    driverboards: pdb
+    servo_controllers: i2c_servo_controller
+
+p_roc:
+    use_watchdog: true
+    watchdog_time: 1s
+
+servos:
+  servo1:
+    servo_min: 0.0
+    servo_max: 1.0
+    reset_position: 0.5
+    positions:
+      0.0: servo1_left
+      0.5: servo1_middle
+      1.0: servo1_right
+    reset_events: ball_starting
+    number: 64-0 # first servo on board with ID 0x40 / 64
+
+machine:
+  balls_installed: 4
+  min_balls: 1
+
+switches:
+  s_scoop:
+    number: A0-B0-0 # SW-16 board at address 0, Bank A, Switch 0
+    type: NC
+    tags: no_skill
+  s_spinner:
+    number: A0-B0-1 # SW-16 board at address 0, Bank A, Switch 1
+    tags: no_skill, spinner
+  s_popbumper:
+    number: A0-B0-2 # SW-16 board at address 0, Bank A, Switch 2
+    tags: no_skill, jet
+  s_droptarget:
+    number: A0-B0-3 # SW-16 board at address 0, Bank A, Switch 3
+    tags: no_skill
+  s_mag_opto:
+    number: A0-B0-4 # SW-16 board at address 0, Bank A, Switch 4
+    tags: no_skill
+  s_left_flipper:
+    number: A0-B0-5 # SW-16 board at address 0, Bank A, Switch 5
+    tags: player, high_score_left, left_flipper
+  s_right_flipper:
+    number: A0-B0-6 # SW-16 board at address 0, Bank A, Switch 6
+    tags: player, high_score_right, right_flipper
+  s_start:
+    number: A0-B0-7 # SW-16 board at address 0, Bank A, Switch 7
+    tags: start, player, high_score_select
+
+  s_left_slingshot:
+    number: A0-B1-0 # SW-16 board at address 0, Bank B, Switch 0
+    debounce: quick
+    tags: no_skill, slingshot
+  s_right_slingshot:
+    number: A0-B1-1 # SW-16 board at address 0, Bank B, Switch 1
+    debounce: quick
+    tags: no_skill, slingshot
+  s_plunger:
+    number: A0-B1-2 # SW-16 board at address 0, Bank B, Switch 2
+    tags: plunger
+  s_trough4:
+    number: A0-B1-3 # SW-16 board at address 0, Bank B, Switch 3
+  s_trough3:
+    number: A0-B1-4 # SW-16 board at address 0, Bank B, Switch 4
+  s_trough2:
+    number: A0-B1-5 # SW-16 board at address 0, Bank B, Switch 5
+  s_trough1:
+    number: A0-B1-6 # SW-16 board at address 0, Bank B, Switch 6
+    type: NC # optos are Normally Closed
+  s_trough_jam:
+    number: A0-B1-7 # SW-16 board at address 0, Bank B, Switch 7
+    type: NC # optos are Normally Closed
+
+  s_esc:
+    number: A7-B0-0 # SW-16 board at address 7, Bank A, Switch 0
+    tags: service_esc
+  s_down:
+    number: A7-B0-1 # SW-16 board at address 7, Bank A, Switch 1
+    tags: service_down
+  s_up:
+    number: A7-B0-2 # SW-16 board at address 7, Bank A, Switch 2
+    tags: service_up
+  s_enter:
+    number: A7-B0-3 # SW-16 board at address 7, Bank A, Switch 3
+    tags: service_enter
+  s_plumb_bob:
+    number: A7-B0-4 # SW-16 board at address 7, Bank A, Switch 4
+    tags: tilt_warning
+  s_launch_button:
+    number: A7-B0-5 # SW-16 board at address 7, Bank A, Switch 5
+  s_slam_tilt:
+    number: A7-B0-6 # SW-16 board at address 7, Bank A, Switch 6
+    tags: slam_tilt
+  s_coin_door_closed:
+    number: A7-B0-7 # SW-16 board at address 7, Bank A, Switch 7
+    tags: service_door_closed, power_on
+     
+  s_left_outlane:
+    number: A7-B1-0 # SW-16 board at address 7, Bank B, Switch 0
+    tags: no_skill, outlane
+  s_left_inlane:
+    number: A7-B1-1 # SW-16 board at address 7, Bank B, Switch 1
+    tags: no_skill, inlane
+  s_right_inlane:
+    number: A7-B1-2 # SW-16 board at address 7, Bank B, Switch 2
+    tags: no_skill, inlane
+  s_right_outlane:
+    number: A7-B1-3 # SW-16 board at address 7, Bank B, Switch 3
+    tags: no_skill, outlane
+  s_standup_1:
+    number: A7-B1-4 # SW-16 board at address 7, Bank B, Switch 4
+  # tags: playfield_active
+  s_standup_2:
+    number: A7-B1-5 # SW-16 board at address 7, Bank B, Switch 5
+  # tags: playfield_active
+  s_standup_3:
+    number: A7-B1-6 # SW-16 board at address 7, Bank B, Switch 6
+  # tags: playfield_active
+coils:
+    c_scoop_eject:
+        number: A5-B0-0 # PD-16 board at address 5, Bank A, Output 0
+    c_jet_bumper:
+        number: A5-B0-1 # PD-16 board at address 5, Bank A, Output 1
+    c_right_slingshot:
+        number: A5-B0-2 # PD-16 board at address 5, Bank A, Output 2
+        default_pulse_ms: 7
+    c_plunger:
+        number: A5-B0-3 # PD-16 board at address 5, Bank A, Output 3
+    c_trough_eject:
+        number: A5-B0-4 # PD-16 board at address 5, Bank A, Output 4
+        default_pulse_ms: 20
+    c_flipper_right_main:
+        number: A5-B0-5 # PD-16 board at address 5, Bank A, Output 5
+        default_pulse_ms: 15
+    c_flipper_right_hold:
+        number: A5-B0-6 # PD-16 board at address 5, Bank A, Output 6
+        allow_enable: yes
+# Bank B
+    c_magnet:
+        number: A5-B1-0 # PD-16 board at address 5, Bank B, Output 0
+    c_target_reset:
+        number: A5-B1-1 # PD-16 board at address 5, Bank B, Output 1
+        default_pulse_ms: 15
+    c_left_slingshot:
+        number: A5-B1-2 # PD-16 board at address 5, Bank B, Output 2
+        default_pulse_ms: 7
+    c_flipper_left_main:
+        number: A5-B1-3 # PD-16 board at address 5, Bank B, Output 3
+        default_pulse_ms: 15
+    c_flipper_left_hold:
+        number: A5-B1-4 # PD-16 board at address 5, Bank B, Output 4
+        allow_enable: true
+        default_pulse_ms: 20
+    c_target_knockdown:
+        number: A5-B1-5 # PD-16 board at address 5, Bank B, Output 5
+        default_pulse_ms: 4 #set very low when running at 48 volts
+
+lights:
+  l_gi_left_sling:
+    number: 1-0-1-2
+    platform_settings: 
+      polarity: True
+  l_left_inlane:
+    number: 1-3-4-5
+    platform_settings: 
+      polarity: True
+  l_left_outlane:
+    number: 1-6-7-8
+    platform_settings: 
+      polarity: True
+  l_gi_lower_left:
+    number: 1-9-10-11
+    platform_settings: 
+      polarity: True
+
+  l_gi_right_sling:
+    number: 1-18-19-20
+    platform_settings: 
+      polarity: True
+  l_right_inlane:
+    number: 1-15-16-17
+    platform_settings: 
+      polarity: True
+  l_right_outlane:
+    number: 1-12-13-14
+    platform_settings: 
+      polarity: True
+  l_gi_lower_right:
+    number: 1-21-22-23
+    platform_settings: 
+      polarity: True
+       
+  l_mode4:
+    number: 1-24-25-26
+    platform_settings: 
+      polarity: True
+  l_mode3:
+    number: 1-27-28-29
+    platform_settings: 
+      polarity: True
+  l_mode2:
+    number: 1-30-31-32
+    platform_settings: 
+      polarity: True
+  l_mode1:
+    number: 1-33-34-35
+    platform_settings: 
+      polarity: True
+       
+  l_shoot_again:
+    number: 1-36-37-38
+    platform_settings: 
+      polarity: True
+  l_mode5:
+    number: 1-39-40-41
+    platform_settings: 
+      polarity: True
+  l_mode6:
+    number: 1-42-43-44
+    platform_settings: 
+      polarity: True
+  l_mode7:
+    number: 1-45-46-47
+    platform_settings: 
+      polarity: True
+
+  l_left_bank3:
+    number: 1-48-49-50
+    platform_settings: 
+      polarity: True
+  l_left_bank2:
+    number: 1-51-52-53
+    platform_settings: 
+      polarity: True
+  l_left_bank1:
+    number: 1-54-55-56
+    platform_settings: 
+      polarity: True
+  l_gi_left_upper:
+    number: 1-57-58-59
+    platform_settings: 
+      polarity: True
+
+  l_extra_ball:
+    number: 1-60-61-62
+    platform_settings: 
+      polarity: True
+  l_right_step1:
+    number: 1-63-64-65
+    platform_settings: 
+      polarity: True
+  l_right_step2:
+    number: 1-66-67-68
+    platform_settings: 
+      polarity: True
+  l_right_step3:
+    number: 1-69-70-71
+    platform_settings: 
+      polarity: True
+
+autofire_coils:
+  left_slingshot:
+    coil: c_left_slingshot
+    switch: s_left_slingshot
+  right_slingshot:
+    coil: c_right_slingshot
+    switch: s_right_slingshot
+  pop_bumper:
+    coil: c_jet_bumper
+    switch: s_popbumper
+
+playfields:
+    playfield:
+        tags: default
+        default_source_device: bd_plunger
+
+flippers:
+    left_flipper:
+        main_coil: c_flipper_left_main
+        hold_coil: c_flipper_left_hold
+        activation_switch: s_left_flipper
+#       enable_events: machine_reset_phase_3
+    right_flipper:
+        main_coil: c_flipper_right_main
+        hold_coil: c_flipper_right_hold
+        activation_switch: s_right_flipper
+#       enable_events: machine_reset_phase_3
+
+ball_devices:
+    bd_trough:
+        ball_switches: s_trough1, s_trough2, s_trough3, s_trough4, s_trough_jam
+        eject_coil: c_trough_eject
+        tags: trough, home, drain
+        jam_switch: s_trough_jam
+        eject_coil_jam_pulse: 15ms
+        eject_targets: bd_plunger
+    bd_plunger:
+        ball_switches: s_plunger
+        eject_coil: c_plunger
+        mechanical_eject: true
+        eject_timeouts: 3s
+        player_controlled_eject_event: s_launch_button_active
+    bd_scoop:
+        ball_switches: s_scoop
+        eject_coil: c_scoop_eject
+        eject_timeouts: 1s
+
+drop_targets:
+  target1:
+    reset_coil: c_target_reset
+    switch: s_droptarget
+    knockdown_coil: c_target_knockdown
+    knockdown_events: flipper_cancel, do_knockdown
+    reset_events: ball_starting, machine_reset_phase_3
+
+virtual_platform_start_active_switches:
+  - s_trough1
+  - s_trough2
+  - s_trough3
+  - s_trough4
+  - s_coin_door_closed
+
