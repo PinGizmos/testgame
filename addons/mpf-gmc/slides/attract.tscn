@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://bj1cy1mvdgxdr"]
 
 [ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_2wi4k"]
+[ext_resource type="Script" uid="uid://dpe3dq8axt3g7" path="res://addons/mpf-gmc/classes/mpf_carousel.gd" id="2_4lj0u"]
+[ext_resource type="Texture2D" uid="uid://dounln3l35d26" path="res://addons/mpf-gmc/images/logo_mpf.png" id="3_i7et4"]
+[ext_resource type="Script" uid="uid://bfvhmv2eirpua" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="4_irskq"]
 
 [node name="Attract" type="Control" unique_id=82406280]
 layout_mode = 3
@@ -14,10 +17,40 @@ offset_right = 1280.0
 offset_bottom = 1024.0
 color = Color(0.043137256, 0.83137256, 0.047058824, 1)
 
-[node name="Label" type="Label" parent="ColorRect" unique_id=1123794468]
+[node name="MPFCarousel" type="Control" parent="." unique_id=1142138146]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_4lj0u")
+carousel_name = "attract"
+metadata/_custom_type_script = "uid://dpe3dq8axt3g7"
+
+[node name="mpf_logo" type="Sprite2D" parent="MPFCarousel" unique_id=1401242030]
+position = Vector2(250, 157)
+scale = Vector2(0.8204546, 0.6124999)
+texture = ExtResource("3_i7et4")
+
+[node name="credits" type="Label" parent="MPFCarousel" unique_id=1607253699]
 layout_mode = 0
-offset_right = 484.0
-offset_bottom = 316.0
+offset_left = 5.0
+offset_top = 2.0
+offset_right = 489.0
+offset_bottom = 320.0
+theme_override_font_sizes/font_size = 44
+text = "SAMPLE TEXT"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("4_irskq")
+variable_type = 2
+variable_name = "credits_string"
+metadata/_custom_type_script = "uid://bfvhmv2eirpua"
+
+[node name="title" type="Label" parent="MPFCarousel" unique_id=1123794468]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 4.0
+offset_right = 483.0
+offset_bottom = 320.0
 theme_override_font_sizes/font_size = 32
 text = "2nd slide for Steve's game"
 horizontal_alignment = 1
